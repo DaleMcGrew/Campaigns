@@ -41,7 +41,7 @@ class CampaignStartAddPolitician extends Component {
       const campaignPoliticianListQueuedToSaveJson = JSON.stringify(campaignPoliticianListQueuedToSave);
       // console.log('CampaignStartAddPolitician, campaignPoliticianListQueuedToSaveJson:', campaignPoliticianListQueuedToSaveJson);
       CampaignStartActions.campaignPoliticianListSave(campaignWeVoteId, campaignPoliticianListQueuedToSaveJson);
-      CampaignStartActions.campaignPoliticianListQueuedToSave('');
+      CampaignStartActions.campaignPoliticianListQueuedToSave(undefined);
     }
     historyPush('/start-a-campaign-why-winning-matters');
   }

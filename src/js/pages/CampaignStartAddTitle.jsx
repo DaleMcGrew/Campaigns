@@ -37,7 +37,7 @@ class CampaignStartAddTitle extends Component {
       // console.log('CampaignStartAddTitle, campaignTitleQueuedToSave:', campaignTitleQueuedToSave);
       const campaignWeVoteId = '';
       CampaignStartActions.campaignTitleSave(campaignWeVoteId, campaignTitleQueuedToSave);
-      CampaignStartActions.campaignTitleQueuedToSave('');
+      CampaignStartActions.campaignTitleQueuedToSave(undefined);
     }
     historyPush('/who-do-you-want-to-see-elected');
   }

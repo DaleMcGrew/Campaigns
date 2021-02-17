@@ -1,16 +1,30 @@
 import Dispatcher from '../components/Dispatcher/Dispatcher';
 
 export default {
-  campaignRetrieve (campaignWeVoteId) {
-    Dispatcher.loadEndpoint('campaignRetrieve',
+  campaignDescriptionQueuedToSave (campaignDescription) {
+    Dispatcher.dispatch({ type: 'campaignDescriptionQueuedToSave', payload: campaignDescription });
+  },
+
+  campaignDescriptionSave (campaignWeVoteId, campaignDescription) {
+    // console.log('campaignDescriptionSave: ', campaignDescription);
+    Dispatcher.loadEndpoint('campaignStartSave',
       {
+        campaign_description: campaignDescription,
+        campaign_description_changed: true,
         campaignx_we_vote_id: campaignWeVoteId,
       });
   },
 
-  campaignRetrieveAsOwner (campaignWeVoteId) {
-    Dispatcher.loadEndpoint('campaignRetrieveAsOwner',
+  campaignPhotoQueuedToSave (campaignPhotoFromFileReader) {
+    Dispatcher.dispatch({ type: 'campaignPhotoQueuedToSave', payload: campaignPhotoFromFileReader });
+  },
+
+  campaignPhotoSave (campaignWeVoteId, campaignPhotoFromFileReader) {
+    // console.log('campaignPhotoFromFileReader: ', campaignPhotoFromFileReader);
+    Dispatcher.loadEndpoint('campaignStartSave',
       {
+        campaign_photo_from_file_reader: campaignPhotoFromFileReader,
+        campaign_photo_changed: true,
         campaignx_we_vote_id: campaignWeVoteId,
       });
   },
@@ -25,6 +39,20 @@ export default {
       {
         politician_list: campaignPoliticianList,
         politician_list_changed: true,
+        campaignx_we_vote_id: campaignWeVoteId,
+      });
+  },
+
+  campaignRetrieve (campaignWeVoteId) {
+    Dispatcher.loadEndpoint('campaignRetrieve',
+      {
+        campaignx_we_vote_id: campaignWeVoteId,
+      });
+  },
+
+  campaignRetrieveAsOwner (campaignWeVoteId) {
+    Dispatcher.loadEndpoint('campaignRetrieveAsOwner',
+      {
         campaignx_we_vote_id: campaignWeVoteId,
       });
   },

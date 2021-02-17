@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import CampaignStartActions from '../actions/CampaignStartActions';
 import CampaignStartSteps from '../components/Navigation/CampaignStartSteps';
 import CampaignStartStore from '../stores/CampaignStartStore';
-// import CampaignTitleInputField from '../components/CampaignStart/CampaignTitleInputField';
+import CampaignDescriptionInputField from '../components/CampaignStart/CampaignDescriptionInputField';
 import { historyPush, isCordova } from '../utils/cordovaUtils';
 import MainFooter from '../components/Navigation/MainFooter';
 import MainHeaderBar from '../components/Navigation/MainHeaderBar';
@@ -30,14 +30,14 @@ class CampaignStartAddDescription extends Component {
     }).catch((error) => console.error('An error occurred while loading jQuery', error));
   }
 
-  submitCampaignTitle = () => {
-    const campaignTitleQueuedToSave = CampaignStartStore.getCampaignTitleQueuedToSave();
-    const campaignTitleQueuedToSaveSet = CampaignStartStore.getCampaignTitleQueuedToSaveSet();
-    if (campaignTitleQueuedToSaveSet) {
-      // console.log('CampaignStartAddDescription, campaignTitleQueuedToSave:', campaignTitleQueuedToSave);
+  submitCampaignDescription = () => {
+    const campaignDescriptionQueuedToSave = CampaignStartStore.getCampaignDescriptionQueuedToSave();
+    const campaignDescriptionQueuedToSaveSet = CampaignStartStore.getCampaignDescriptionQueuedToSaveSet();
+    if (campaignDescriptionQueuedToSaveSet) {
+      // console.log('CampaignStartAddDescription, campaignDescriptionQueuedToSave:', campaignDescriptionQueuedToSave);
       const campaignWeVoteId = '';
-      CampaignStartActions.campaignTitleSave(campaignWeVoteId, campaignTitleQueuedToSave);
-      CampaignStartActions.campaignTitleQueuedToSave('');
+      CampaignStartActions.campaignDescriptionSave(campaignWeVoteId, campaignDescriptionQueuedToSave);
+      CampaignStartActions.campaignDescriptionQueuedToSave(undefined);
     }
     historyPush('/start-a-campaign-add-photo');
   }
@@ -65,14 +65,14 @@ class CampaignStartAddDescription extends Component {
               </ContentIntroductionText>
               <CampaignStartSectionWrapper>
                 <CampaignStartSection>
-                  {/* <CampaignTitleInputField /> */}
+                  <CampaignDescriptionInputField />
                   <DesktopButtonWrapper className="u-show-desktop-tablet">
                     <DesktopButtonPanel>
                       <Button
                         classes={{ root: classes.buttonDesktop }}
                         color="primary"
-                        id="saveCampaignTitle"
-                        onClick={this.submitCampaignTitle}
+                        id="saveCampaignDescription"
+                        onClick={this.submitCampaignDescription}
                         variant="contained"
                       >
                         Continue
@@ -126,8 +126,8 @@ class CampaignStartAddDescription extends Component {
             <Button
               classes={{ root: mobileButtonClasses }}
               color="primary"
-              id="saveCampaignTitleFooter"
-              onClick={this.submitCampaignTitle}
+              id="saveCampaignDescriptionFooter"
+              onClick={this.submitCampaignDescription}
               variant="contained"
             >
               Continue

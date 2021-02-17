@@ -45,7 +45,8 @@ export default function $ajax (options) {
   options.success = options.success || defaults.success;
   options.error = options.error || defaults.error;
   // console.log('service.js, options.endpoint: ', options.endpoint);
-  if (options.endpoint === 'organizationPhotosSave') {
+  if (options.endpoint === 'campaignStartSave' ||
+      options.endpoint === 'organizationPhotosSave') {
     options.method = 'POST';
     // const csrftoken = cookies.getItem('csrftoken');
     // const headers = new Headers();

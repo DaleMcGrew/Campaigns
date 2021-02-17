@@ -4,11 +4,15 @@ import Dispatcher from '../components/Dispatcher/Dispatcher';
 class CampaignStartStore extends ReduceStore {
   getInitialState () {
     return {
+      campaignDescription: '',
+      campaignDescriptionQueuedToSave: '',
+      campaignDescriptionQueuedToSaveSet: false,
+      campaignPhotoLargeUrl: '',
+      campaignPhotoQueuedToSave: '',
+      campaignPhotoQueuedToSaveSet: false,
       campaignPoliticianList: [],
       campaignPoliticianListQueuedToSave: [],
       campaignPoliticianListQueuedToSaveSet: false,
-      campaignDescription: '',
-      campaignPhoto: '',
       campaignTitle: '',
       campaignTitleQueuedToSave: '',
       campaignTitleQueuedToSaveSet: false,
@@ -21,14 +25,6 @@ class CampaignStartStore extends ReduceStore {
     return this.getInitialState();
   }
 
-  campaignPoliticianListExists () {
-    if (this.getState().campaignPoliticianList) {
-      return Boolean(this.getState().campaignPoliticianList.length > 0);
-    } else {
-      return false;
-    }
-  }
-
   campaignDescriptionExists () {
     if (this.getState().campaignDescription) {
       return Boolean(this.getState().campaignDescription.length > 10);
@@ -38,8 +34,16 @@ class CampaignStartStore extends ReduceStore {
   }
 
   campaignPhotoExists () {
-    if (this.getState().campaignPhoto) {
-      return Boolean(this.getState().campaignPhoto.length > 10);
+    if (this.getState().campaignPhotoLargeUrl) {
+      return Boolean(this.getState().campaignPhotoLargeUrl.length > 10);
+    } else {
+      return false;
+    }
+  }
+
+  campaignPoliticianListExists () {
+    if (this.getState().campaignPoliticianList) {
+      return Boolean(this.getState().campaignPoliticianList.length > 0);
     } else {
       return false;
     }
@@ -51,6 +55,30 @@ class CampaignStartStore extends ReduceStore {
     } else {
       return false;
     }
+  }
+
+  getCampaignDescription () {
+    return this.getState().campaignDescription || '';
+  }
+
+  getCampaignDescriptionQueuedToSave () {
+    return this.getState().campaignDescriptionQueuedToSave;
+  }
+
+  getCampaignDescriptionQueuedToSaveSet () {
+    return this.getState().campaignDescriptionQueuedToSaveSet;
+  }
+
+  getCampaignPhotoLargeUrl () {
+    return this.getState().campaignPhotoLargeUrl || '';
+  }
+
+  getCampaignPhotoQueuedToSave () {
+    return this.getState().campaignPhotoQueuedToSave;
+  }
+
+  getCampaignPhotoQueuedToSaveSet () {
+    return this.getState().campaignPhotoQueuedToSaveSet;
   }
 
   getCampaignPoliticianList () {
@@ -79,18 +107,61 @@ class CampaignStartStore extends ReduceStore {
 
   reduce (state, action) {
     switch (action.type) {
+      case 'campaignDescriptionQueuedToSave':
+        // console.log('CampaignStartStore campaignDescriptionQueuedToSave: ', action.payload);
+        if (action.payload === undefined) {
+          return {
+            ...state,
+            campaignDescriptionQueuedToSave: [],
+            campaignDescriptionQueuedToSaveSet: false,
+          };
+        } else {
+          return {
+            ...state,
+            campaignDescriptionQueuedToSave: action.payload,
+            campaignDescriptionQueuedToSaveSet: true,
+          };
+        }
+
+      case 'campaignPhotoQueuedToSave':
+        // console.log('CampaignStartStore campaignPhotoQueuedToSave: ', action.payload);
+        if (action.payload === undefined) {
+          return {
+            ...state,
+            campaignPhotoQueuedToSave: '',
+            campaignPhotoQueuedToSaveSet: false,
+          };
+        } else {
+          return {
+            ...state,
+            campaignPhotoQueuedToSave: action.payload,
+            campaignPhotoQueuedToSaveSet: true,
+          };
+        }
+
       case 'campaignPoliticianListQueuedToSave':
         // console.log('CampaignStartStore campaignPoliticianListQueuedToSave: ', action.payload);
-        return {
-          ...state,
-          campaignPoliticianListQueuedToSave: action.payload,
-          campaignPoliticianListQueuedToSaveSet: true,
-        };
+        if (action.payload === undefined) {
+          return {
+            ...state,
+            campaignPoliticianListQueuedToSave: [],
+            campaignPoliticianListQueuedToSaveSet: false,
+          };
+        } else {
+          return {
+            ...state,
+            campaignPoliticianListQueuedToSave: action.payload,
+            campaignPoliticianListQueuedToSaveSet: true,
+          };
+        }
 
+      case 'campaignRetrieve':
       case 'campaignRetrieveAsOwner':
         // console.log('CampaignStartStore campaignRetrieveAsOwner');
         return {
           ...state,
+          campaignDescription: action.res.campaign_description,
+          campaignPhotoLargeUrl: action.res.we_vote_hosted_campaign_photo_large_url,
           campaignPoliticianList: action.res.campaignx_politician_list,
           campaignTitle: action.res.campaign_title,
           campaignXOwnerList: action.res.campaignx_owner_list,
@@ -101,6 +172,8 @@ class CampaignStartStore extends ReduceStore {
         // console.log('CampaignStartStore campaignStartSave');
         return {
           ...state,
+          campaignDescription: action.res.campaign_description,
+          campaignPhotoLargeUrl: action.res.we_vote_hosted_campaign_photo_large_url,
           campaignPoliticianList: action.res.campaignx_politician_list,
           campaignTitle: action.res.campaign_title,
           campaignXOwnerList: action.res.campaignx_owner_list,
@@ -109,11 +182,19 @@ class CampaignStartStore extends ReduceStore {
 
       case 'campaignTitleQueuedToSave':
         // console.log('CampaignStartStore campaignTitleQueuedToSave: ', action.payload);
-        return {
-          ...state,
-          campaignTitleQueuedToSave: action.payload,
-          campaignTitleQueuedToSaveSet: true,
-        };
+        if (action.payload === undefined) {
+          return {
+            ...state,
+            campaignTitleQueuedToSave: [],
+            campaignTitleQueuedToSaveSet: false,
+          };
+        } else {
+          return {
+            ...state,
+            campaignTitleQueuedToSave: action.payload,
+            campaignTitleQueuedToSaveSet: true,
+          };
+        }
 
       default:
         return state;

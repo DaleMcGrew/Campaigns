@@ -6,6 +6,10 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WeVote/Campaigns.git"
+  },
   "scripts": {
     "build": "node buildDateFile.js && webpack --mode production",
     "lint": "eslint --format stylish --ext .jsx --ext .js src/js",
@@ -56,6 +60,7 @@
     "flux": "~4.0.1",
     "jquery": "~3.5.1",
     "keymirror": "~0.1.1",
+    "material-ui-dropzone": "~3.5.0",
     "moment": "~2.29.1",
     "object-assign": "~4.1.1",
     "prop-types": "~15.7.2",

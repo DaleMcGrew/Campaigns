@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import CampaignStartActions from '../actions/CampaignStartActions';
 import CampaignStartSteps from '../components/Navigation/CampaignStartSteps';
 import CampaignStartStore from '../stores/CampaignStartStore';
-// import CampaignTitleInputField from '../components/CampaignStart/CampaignTitleInputField';
+import CampaignPhotoUpload from '../components/CampaignStart/CampaignPhotoUpload';
 import { historyPush, isCordova } from '../utils/cordovaUtils';
 import MainFooter from '../components/Navigation/MainFooter';
 import MainHeaderBar from '../components/Navigation/MainHeaderBar';
@@ -30,14 +30,14 @@ class CampaignStartAddPhoto extends Component {
     }).catch((error) => console.error('An error occurred while loading jQuery', error));
   }
 
-  submitCampaignTitle = () => {
-    const campaignTitleQueuedToSave = CampaignStartStore.getCampaignTitleQueuedToSave();
-    const campaignTitleQueuedToSaveSet = CampaignStartStore.getCampaignTitleQueuedToSaveSet();
-    if (campaignTitleQueuedToSaveSet) {
-      // console.log('CampaignStartAddPhoto, campaignTitleQueuedToSave:', campaignTitleQueuedToSave);
+  submitCampaignPhoto = () => {
+    const campaignPhotoQueuedToSave = CampaignStartStore.getCampaignPhotoQueuedToSave();
+    const campaignPhotoQueuedToSaveSet = CampaignStartStore.getCampaignPhotoQueuedToSaveSet();
+    if (campaignPhotoQueuedToSaveSet) {
+      // console.log('CampaignStartAddPhoto, campaignPhotoQueuedToSave:', campaignPhotoQueuedToSave);
       const campaignWeVoteId = '';
-      CampaignStartActions.campaignTitleSave(campaignWeVoteId, campaignTitleQueuedToSave);
-      CampaignStartActions.campaignTitleQueuedToSave('');
+      CampaignStartActions.campaignPhotoSave(campaignWeVoteId, campaignPhotoQueuedToSave);
+      CampaignStartActions.campaignPhotoQueuedToSave(undefined);
     }
     historyPush('/c/sam-davis-for-oakland-school-board');
   }
@@ -58,21 +58,21 @@ class CampaignStartAddPhoto extends Component {
             <InnerWrapper>
               <CampaignStartSteps atStepNumber4 />
               <ContentTitle>
-                Add a photo or video
+                Add a photo
               </ContentTitle>
               <ContentIntroductionText>
-                Campaigns with a photo or video receive six times more supporters than those without. Include one that captures the emotion of your story.
+                Campaigns with a photo receive six times more supporters than those without. Include one that captures the emotion of your story.
               </ContentIntroductionText>
               <CampaignStartSectionWrapper>
                 <CampaignStartSection>
-                  {/* <CampaignTitleInputField /> */}
+                  <CampaignPhotoUpload />
                   <DesktopButtonWrapper className="u-show-desktop-tablet">
                     <DesktopButtonPanel>
                       <Button
                         classes={{ root: classes.buttonDesktop }}
                         color="primary"
-                        id="saveCampaignTitle"
-                        onClick={this.submitCampaignTitle}
+                        id="saveCampaignPhoto"
+                        onClick={this.submitCampaignPhoto}
                         variant="contained"
                       >
                         Save and preview
@@ -85,16 +85,16 @@ class CampaignStartAddPhoto extends Component {
                         Choose a photo that captures the emotion of your campaign
                       </AdviceBoxTitle>
                       <AdviceBoxText>
-                        Photos of people with your candidate(s) work well.
+                        A photo of people with your candidate(s) works well.
                       </AdviceBoxText>
                       <AdviceBoxText>
                         &nbsp;
                       </AdviceBoxText>
                       <AdviceBoxTitle>
-                        Try to upload photos that are 1600 x 900 pixels or larger
+                        Try to upload a photo that is 1600 x 900 pixels or larger
                       </AdviceBoxTitle>
                       <AdviceBoxText>
-                        Large photos look good on all screen sizes.
+                        A large photo will look good on all screen sizes. We can accept one photo up to 5 megabytes in size.
                       </AdviceBoxText>
                       <AdviceBoxText>
                         &nbsp;
@@ -117,11 +117,11 @@ class CampaignStartAddPhoto extends Component {
             <Button
               classes={{ root: mobileButtonClasses }}
               color="primary"
-              id="saveCampaignTitleFooter"
-              onClick={this.submitCampaignTitle}
+              id="saveCampaignPhotoFooter"
+              onClick={this.submitCampaignPhoto}
               variant="contained"
             >
-              Continue
+              Save and preview
             </Button>
           </MobileButtonPanel>
         </MobileButtonWrapper>
@@ -192,6 +192,7 @@ const AdviceBoxWrapper = styled.div`
 
 const CampaignStartSection = styled.div`
   margin-bottom: 60px !important;
+  margin-top: 10px;
   max-width: 620px;
   width: 100%;
 `;
@@ -230,7 +231,7 @@ const DesktopButtonPanel = styled.div`
 const DesktopButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 30px 0 0 0;
+  margin: 20px 0 0 0;
   width: 100%;
 `;
 
